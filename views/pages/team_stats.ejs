@@ -1,0 +1,77 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+	<div class="container">
+		<br>
+		<div class="jumbotron">
+		  <h1 class="display-4">Fall 2018 Stats</h1>
+		  <p class="lead">Detailed information on how the Buffs are doing in the 2018 Football Season!</p>
+		</div>
+
+		<table class="table table-bordered" id="stats_table">
+			<tr>
+				<th class="align-bottom" rowspan="2">Game Date</th>
+				<th class="align-bottom"rowspan="2">Opposing Team Name</th>
+				<th class="text-center" colspan="2">Score</th>
+				<th class="align-bottom" rowspan="2">Winner</th>
+			</tr>
+			<tr>
+				<th>Home Score</th>
+				<th>Opp. Score</th>
+			</tr>
+			<!-- TODO: Iterate over the Football_table data here
+						1. Display the information for each row (date, name, home score, visitor score)
+						2. Determine who the winner is and display it in the final column
+
+						If you're not sure how the logic should work here, review the code you add to the client-side javascript
+						that ran onload for Lab 5.  We are doing the same kind of operations we had in Lab 5, but we are instead having
+						everything handled via server-side scriptes
+			-->
+			<% if (data) {
+				console.log(data);
+				var table = '';
+				data.forEach((game) => {
+					table += '<tr> '
+						table += '<th>' + game.game_date + '</th>';
+						table += '<th>' + game.visitor_name + '</th>';
+						table += '<th>' + game.home_score + '</th>';
+						table += '<th>' + game.visitor_score + '</th>';
+						if(game.visitor_score < game.home_score){
+							table += '<th> Boulder </th>';
+						}else {
+							table += '<th>' + game.visitor_name + '</th>';
+						}
+						table += '</tr>';
+				})
+			}
+			%>
+			<%- table %>
+
+		</table>
+		<br>
+		<table class="table text-center">
+			<tr>
+				<th>Wins</th>
+				<th>Losses</th>
+			</tr>
+			<tr>
+				<td>
+					<% if(win_games){
+						console.log(win_games);
+						var wins = '' + win_games[0].count;
+					} %>
+					<%- wins %>
+					 <!-- TODO: Display the total number of wins here.
+							    This value should come from your server.js files query, don't calculate it in this file! --></td>
+				<td>
+					<% if(lost_games){
+						console.log(lost_games);
+						var lose = '' + lost_games[0].count;
+					} %>
+					<%- lose %>
+					 <!-- TODO: Display the total number of losses here.
+							    This value should come from your server.js files query, don't calculate it in this file! --></td>
+			</tr>
+		</table>
+
+	</div>
+<% include ../partials/footer %>
